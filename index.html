@@ -1,812 +1,1512 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nyaya Sahayak — Legal Aid for Every Indian</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --paper:#f0e6cc;
-  --paper-dark:#e4d5b0;
-  --ink:#1a1208;
-  --ink-faded:#4a3f2f;
-  --burg:#6b1a1a;
-  --red-stamp:#c0392b;
-  --gold-rule:#9a7a3a;
-  --gold-lt:#c9a84c;
-  --off-white:#faf6ed;
-}
-html{scroll-behavior:smooth}
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:'Libre Baskerville',Georgia,serif;
-  font-size:17px;
-  line-height:1.75;
-  overflow-x:hidden;
-}
-/* paper grain */
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyaya Sahayak — Legal Aid for Every Indian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  padding:.9rem 1.5rem;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid transparent;
-  transition:all .35s;
-}
-nav.stuck{
-  background:rgba(240,230,204,.97);
-  border-bottom-color:var(--gold-rule);
-  backdrop-filter:blur(4px);
-}
-.nav-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.3rem;font-weight:700;letter-spacing:.04em;
-  color:var(--ink);text-decoration:none;
-}
-.nav-title span{color:var(--burg);}
-.nav-links{list-style:none;display:flex;gap:1.6rem;}
-.nav-links a{
-  font-family:'Special Elite',monospace;
-  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-faded);text-decoration:none;transition:color .2s;
-}
-.nav-links a:hover{color:var(--burg);}
-@media(max-width:580px){.nav-links{display:none}}
+    :root {
+      --paper: #f0e6cc;
+      --paper-dark: #e4d5b0;
+      --ink: #1a1208;
+      --ink-faded: #4a3f2f;
+      --burg: #6b1a1a;
+      --red-stamp: #c0392b;
+      --gold-rule: #9a7a3a;
+      --gold-lt: #c9a84c;
+      --off-white: #faf6ed;
+    }
 
-/* ─── HERO / MASTHEAD ─── */
-#hero{
-  min-height:100svh;
-  display:flex;flex-direction:column;
-  background:var(--paper);
-  position:relative;overflow:hidden;
-}
-.hero-bg-seal{
-  position:absolute;right:-8vw;bottom:-8vw;
-  width:min(60vw,500px);
-  opacity:.05;pointer-events:none;
-  will-change:transform;
-}
-.masthead-top{
-  padding:5.5rem 1.5rem 0;
-  border-bottom:3px double var(--ink);
-  text-align:center;
-  position:relative;z-index:2;
-}
-.masthead-kicker{
-  font-family:'Special Elite',monospace;
-  font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--burg);
-  display:flex;align-items:center;justify-content:center;gap:1rem;
-  margin-bottom:.9rem;
-}
-.masthead-kicker::before,.masthead-kicker::after{
-  content:'';flex:1;max-width:70px;height:1px;background:var(--burg);opacity:.5;
-}
-.masthead-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3.2rem,11vw,8rem);
-  font-weight:700;line-height:.92;letter-spacing:-.01em;
-  color:var(--ink);
-}
-.masthead-name em{font-style:italic;color:var(--burg);}
-.masthead-tagline{
-  font-family:'Special Elite',monospace;
-  font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ink-faded);margin:.9rem 0 1.1rem;
-}
-.masthead-rule{
-  height:6px;
-  background:repeating-linear-gradient(90deg,
-    var(--ink) 0,var(--ink) 2px,
-    transparent 2px,transparent 8px,
-    var(--burg) 8px,var(--burg) 10px,
-    transparent 10px,transparent 16px);
-  margin:0 -1.5rem;
-}
-.hero-body{
-  padding:2.5rem 1.5rem 4rem;
-  max-width:960px;margin:0 auto;
-  position:relative;z-index:2;width:100%;
-}
-.hero-cols{
-  display:grid;grid-template-columns:1fr;gap:2rem;
-}
-@media(min-width:700px){.hero-cols{grid-template-columns:55% 1fr;align-items:start;gap:3rem;}}
-.hero-hl{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.3rem,6.5vw,5rem);
-  font-weight:300;line-height:1.06;font-style:italic;color:var(--ink);
-}
-.hero-hl strong{font-style:normal;font-weight:700;display:block;color:var(--burg);}
-.hero-body-text{
-  font-size:1rem;color:var(--ink-faded);line-height:1.9;margin-top:1.4rem;
-}
-.hero-body-text::first-letter{
-  font-family:'Cormorant Garamond',serif;
-  font-size:4.5rem;font-weight:700;
-  float:left;line-height:.75;
-  padding-right:.1em;padding-top:.08em;
-  color:var(--burg);
-}
-.hero-ctas{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;}
-.btn{
-  display:inline-block;
-  font-family:'Special Elite',monospace;
-  font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;
-  text-decoration:none;padding:.75rem 1.6rem;
-  border:1.5px solid var(--ink);color:var(--ink);
-  transition:all .25s;position:relative;
-}
-.btn::after{
-  content:'';position:absolute;inset:3px;
-  border:1px solid var(--ink);opacity:.2;transition:opacity .25s;
-}
-.btn:hover{background:var(--ink);color:var(--paper);}
-.btn:hover::after{border-color:var(--paper);}
-.btn-solid{background:var(--burg);color:var(--paper);border-color:var(--burg);}
-.btn-solid::after{border-color:var(--paper);}
-.btn-solid:hover{background:var(--ink);border-color:var(--ink);}
-.hero-sidebar{
-  border-left:1px solid rgba(26,18,8,.15);padding-left:2rem;
-}
-@media(max-width:699px){.hero-sidebar{border-left:none;border-top:1px solid rgba(26,18,8,.15);padding-left:0;padding-top:1.5rem;}}
-.sidebar-stat{padding:1rem 0;border-bottom:1px dashed rgba(26,18,8,.2);}
-.sidebar-stat:last-child{border-bottom:none;}
-.sidebar-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3rem;font-weight:700;line-height:1;color:var(--burg);
-}
-.sidebar-label{
-  font-family:'Special Elite',monospace;
-  font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink-faded);margin-top:.15rem;
-}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* ─── STATUS STAMP ─── */
-#status{
-  background:var(--paper-dark);
-  border-top:2px solid var(--ink);
-  border-bottom:2px solid var(--ink);
-  padding:3rem 1.5rem;
-  text-align:center;position:relative;overflow:hidden;
-}
-#status::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    -45deg,transparent,transparent 18px,
-    rgba(26,18,8,.025) 18px,rgba(26,18,8,.025) 19px);
-}
-.stamp{
-  display:inline-block;
-  font-family:'Special Elite',monospace;
-  font-size:clamp(1.2rem,4.5vw,2.2rem);
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--red-stamp);
-  border:4px solid var(--red-stamp);
-  padding:.5rem 1.6rem;
-  transform:rotate(-2.5deg);
-  opacity:.85;
-  box-shadow:2px 3px 0 rgba(192,57,43,.2);
-  position:relative;z-index:1;
-}
-.stamp::before{
-  content:'';position:absolute;inset:3px;
-  border:1.5px solid var(--red-stamp);opacity:.35;
-}
-.status-body{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.05rem,3vw,1.4rem);font-style:italic;
-  color:var(--ink-faded);max-width:540px;margin:1.6rem auto 0;
-}
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
 
-/* ─── SECTIONS ─── */
-.section{padding:5rem 1.5rem;position:relative;}
-.section-inner{max-width:960px;margin:0 auto;}
-.gazette-header{
-  border-top:3px solid var(--ink);
-  border-bottom:1px solid var(--ink);
-  padding:.5rem 0;margin-bottom:3rem;
-  display:flex;align-items:baseline;
-  justify-content:space-between;
-  gap:1rem;flex-wrap:wrap;
-}
-.gazette-section-name{
-  font-family:'Special Elite',monospace;
-  font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--burg);
-}
-.gazette-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,5.5vw,3.8rem);
-  font-weight:700;line-height:1.05;color:var(--ink);
-}
+    /* paper grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
 
-/* ─── ABOUT ─── */
-#about{background:var(--off-white);}
-.about-grid{display:grid;grid-template-columns:1fr;gap:3rem;}
-@media(min-width:700px){.about-grid{grid-template-columns:3fr 2fr;align-items:start;}}
-.about-body p{font-size:1.02rem;color:var(--ink-faded);line-height:1.9;}
-.about-body p+p{margin-top:1rem;}
-.pullquote{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.4rem,4vw,2.1rem);
-  font-style:italic;font-weight:300;line-height:1.25;color:var(--burg);
-  border-top:2px solid var(--burg);border-bottom:1px solid var(--burg);
-  padding:1.1rem 0;margin:2rem 0;
-}
-.aside-stats{border-left:3px solid var(--ink);padding-left:1.5rem;}
-@media(max-width:699px){.aside-stats{border-left:none;border-top:3px solid var(--ink);padding-left:0;padding-top:1.5rem;}}
-.aside-stat{padding:1.1rem 0;border-bottom:1px dotted rgba(26,18,8,.2);}
-.aside-stat:last-child{border-bottom:none;}
-.aside-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3.6rem;font-weight:700;line-height:1;color:var(--ink);display:block;
-}
-.aside-label{
-  font-family:'Special Elite',monospace;
-  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--burg);
-  display:block;margin-top:.2rem;
-}
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      padding: .9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: all .35s;
+    }
 
-/* ─── FEATURES ─── */
-#features{background:var(--paper);}
-.feat-row{
-  display:grid;grid-template-columns:1fr;
-  border-top:1px solid rgba(26,18,8,.18);
-  padding:2.5rem 0;gap:1.2rem;
-  transition:background .2s;
-}
-.feat-row:hover{background:rgba(107,26,26,.025);}
-@media(min-width:600px){.feat-row{grid-template-columns:3rem 1fr 2.5rem;align-items:start;gap:2rem;}}
-.feat-index{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3.2rem;font-weight:700;color:rgba(26,18,8,.1);line-height:1;
-}
-.feat-title-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.5rem;}
-.feat-heading{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:var(--ink);line-height:1.1;
-}
-.feat-badge{
-  font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-  border:1px solid var(--burg);color:var(--burg);padding:.18rem .55rem;
-}
-.feat-text{font-size:.96rem;color:var(--ink-faded);line-height:1.8;}
-.feat-tags{margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.4rem;}
-.feat-tag{
-  font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;
-  background:var(--paper-dark);border:1px solid rgba(26,18,8,.15);
-  padding:.2rem .55rem;color:var(--ink-faded);
-}
-.feat-icon-big{font-size:2rem;opacity:.6;text-align:center;padding-top:.3rem;}
-@media(max-width:599px){.feat-index{font-size:2.2rem;}.feat-icon-big{display:none;}}
+    nav.stuck {
+      background: rgba(240, 230, 204, .97);
+      border-bottom-color: var(--gold-rule);
+      backdrop-filter: blur(4px);
+    }
 
-/* ─── WHY ─── */
-#why{background:var(--ink);color:var(--paper);}
-#why .gazette-title{color:var(--paper);}
-#why .gazette-header{border-top-color:var(--paper);border-bottom-color:rgba(240,230,204,.15);}
-#why .gazette-section-name{color:var(--gold-lt);}
-.why-columns{column-count:1;column-gap:3rem;}
-@media(min-width:600px){.why-columns{column-count:2;}}
-@media(min-width:900px){.why-columns{column-count:3;}}
-.why-item{break-inside:avoid;padding:1.2rem 0;border-bottom:1px solid rgba(240,230,204,.08);margin-bottom:.4rem;}
-.why-glyph{font-size:1.4rem;margin-bottom:.45rem;display:block;}
-.why-heading{
-  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;
-  color:var(--gold-lt);margin-bottom:.3rem;
-}
-.why-text{font-size:.9rem;color:rgba(240,230,204,.55);line-height:1.75;}
+    .nav-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--ink);
+      text-decoration: none;
+    }
 
-/* ─── TEAM ─── */
-#team{background:var(--off-white);}
-.team-layout{display:grid;grid-template-columns:1fr;gap:2.5rem;max-width:760px;}
-@media(min-width:600px){.team-layout{grid-template-columns:1fr 1fr;}}
-.dev-profile{
-  background:var(--paper);
-  border:1px solid rgba(26,18,8,.18);
-  padding:2rem 1.8rem;
-  position:relative;
-  transition:transform .25s,box-shadow .25s;
-}
-.dev-profile::before,.dev-profile::after{
-  content:'';position:absolute;width:13px;height:13px;border-style:solid;
-  border-color:var(--burg);
-}
-.dev-profile::before{top:7px;left:7px;border-width:1.5px 0 0 1.5px;}
-.dev-profile::after{bottom:7px;right:7px;border-width:0 1.5px 1.5px 0;}
-.dev-profile:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink);}
-.dev-photo-wrap{
-  width:90px;height:90px;border-radius:50%;overflow:hidden;
-  border:2px solid var(--ink);
-  margin-bottom:1.2rem;
-  background:var(--paper-dark);
-  display:flex;align-items:center;justify-content:center;
-}
-.dev-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.dev-initials{
-  font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--ink-faded);
-}
-.dev-name{
-  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;
-  color:var(--ink);line-height:1;margin-bottom:.2rem;
-}
-.dev-role{
-  font-family:'Special Elite',monospace;font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--burg);margin-bottom:.85rem;
-}
-.dev-bio{font-size:.9rem;color:var(--ink-faded);line-height:1.75;}
-.dev-footer{
-  margin-top:1.2rem;padding-top:1rem;
-  border-top:1px dashed rgba(26,18,8,.2);
-  display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
-}
-.dev-gh-link{
-  display:inline-flex;align-items:center;gap:.45rem;
-  font-family:'Special Elite',monospace;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--ink);text-decoration:none;
-  border-bottom:1px solid transparent;transition:all .2s;
-}
-.dev-gh-link:hover{color:var(--burg);border-bottom-color:var(--burg);}
-.dev-no-gh{
-  font-family:'Special Elite',monospace;font-size:.63rem;letter-spacing:.07em;
-  color:rgba(26,18,8,.3);font-style:italic;
-}
+    .nav-title span {
+      color: var(--burg);
+    }
 
-/* ─── TECH ─── */
-#tech{background:var(--paper-dark);}
-.tech-table{width:100%;border-collapse:collapse;margin-top:1rem;}
-.tech-table th{
-  font-family:'Special Elite',monospace;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--burg);border-bottom:2px solid var(--ink);padding:.5rem .8rem;text-align:left;
-}
-.tech-table td{
-  font-size:.9rem;padding:.7rem .8rem;
-  border-bottom:1px dotted rgba(26,18,8,.15);color:var(--ink-faded);
-}
-.tech-table td:first-child{font-weight:700;color:var(--ink);}
-.tech-table tr:hover td{background:rgba(107,26,26,.03);}
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.6rem;
+    }
 
-/* ─── CONTACT ─── */
-#contact{background:var(--paper);border-top:4px double var(--ink);}
-.contact-inner{max-width:640px;margin:0 auto;text-align:center;}
-.contact-large{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.1rem,6vw,4rem);font-weight:300;font-style:italic;
-  line-height:1.1;color:var(--ink);margin-bottom:1.4rem;
-}
-.contact-large strong{font-style:normal;font-weight:700;}
-.contact-body{font-size:.97rem;color:var(--ink-faded);line-height:1.8;max-width:440px;margin:0 auto 1.6rem;}
-.contact-email-link{
-  display:inline-block;
-  font-family:'Special Elite',monospace;font-size:clamp(.74rem,2.2vw,.95rem);letter-spacing:.07em;
-  color:var(--burg);text-decoration:none;
-  border-bottom:1.5px solid var(--burg);padding-bottom:.15rem;
-  transition:opacity .2s;
-}
-.contact-email-link:hover{opacity:.6;}
-.contact-note{font-size:.85rem;color:rgba(26,18,8,.4);margin-top:1.5rem;font-style:italic;}
+    .nav-links a {
+      font-family: 'Special Elite', monospace;
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      text-decoration: none;
+      transition: color .2s;
+    }
 
-/* ─── ORN DIVIDER ─── */
-.orn-divider{
-  display:flex;align-items:center;justify-content:center;
-  gap:1rem;padding:1.2rem 1.5rem;color:var(--gold-rule);font-size:1.1rem;
-}
-.orn-divider::before,.orn-divider::after{content:'';flex:1;height:1px;background:var(--gold-rule);opacity:.4;}
+    .nav-links a:hover {
+      color: var(--burg);
+    }
 
-/* ─── FOOTER ─── */
-footer{
-  background:var(--ink);color:rgba(240,230,204,.4);
-  padding:2rem 1.5rem;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
-  font-family:'Special Elite',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-}
-.footer-brand{
-  font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;
-  letter-spacing:.04em;text-transform:none;color:var(--gold-lt);
-}
-footer a{color:rgba(240,230,204,.35);text-decoration:none;}
-footer a:hover{color:var(--gold-lt);}
+    @media(max-width:580px) {
+      .nav-links {
+        display: none
+      }
+    }
 
-/* ─── ANIMATIONS ─── */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-.reveal.visible{opacity:1;transform:none;}
-.r1{transition-delay:.1s}.r2{transition-delay:.2s}.r3{transition-delay:.3s}.r4{transition-delay:.4s}
+    /* ─── HERO / MASTHEAD ─── */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
 
-@media(max-width:480px){
-  .hero-ctas{flex-direction:column;align-items:flex-start;}
-  .btn{text-align:center;}
-}
-</style>
+    .hero-bg-seal {
+      position: absolute;
+      right: -8vw;
+      bottom: -8vw;
+      width: min(60vw, 500px);
+      opacity: .05;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .masthead-top {
+      padding: 5.5rem 1.5rem 0;
+      border-bottom: 3px double var(--ink);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .masthead-kicker {
+      font-family: 'Special Elite', monospace;
+      font-size: .68rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--burg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: .9rem;
+    }
+
+    .masthead-kicker::before,
+    .masthead-kicker::after {
+      content: '';
+      flex: 1;
+      max-width: 70px;
+      height: 1px;
+      background: var(--burg);
+      opacity: .5;
+    }
+
+    .masthead-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 11vw, 8rem);
+      font-weight: 700;
+      line-height: .92;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+
+    .masthead-name em {
+      font-style: italic;
+      color: var(--burg);
+    }
+
+    .masthead-tagline {
+      font-family: 'Special Elite', monospace;
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      margin: .9rem 0 1.1rem;
+    }
+
+    .masthead-rule {
+      height: 6px;
+      background: repeating-linear-gradient(90deg,
+          var(--ink) 0, var(--ink) 2px,
+          transparent 2px, transparent 8px,
+          var(--burg) 8px, var(--burg) 10px,
+          transparent 10px, transparent 16px);
+      margin: 0 -1.5rem;
+    }
+
+    .hero-body {
+      padding: 2.5rem 1.5rem 4rem;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-cols {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media(min-width:700px) {
+      .hero-cols {
+        grid-template-columns: 55% 1fr;
+        align-items: start;
+        gap: 3rem;
+      }
+    }
+
+    .hero-hl {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 6.5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.06;
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .hero-hl strong {
+      font-style: normal;
+      font-weight: 700;
+      display: block;
+      color: var(--burg);
+    }
+
+    .hero-body-text {
+      font-size: 1rem;
+      color: var(--ink-faded);
+      line-height: 1.9;
+      margin-top: 1.4rem;
+    }
+
+    .hero-body-text::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.5rem;
+      font-weight: 700;
+      float: left;
+      line-height: .75;
+      padding-right: .1em;
+      padding-top: .08em;
+      color: var(--burg);
+    }
+
+    .hero-ctas {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Special Elite', monospace;
+      font-size: .76rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .75rem 1.6rem;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      transition: all .25s;
+      position: relative;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid var(--ink);
+      opacity: .2;
+      transition: opacity .25s;
+    }
+
+    .btn:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn:hover::after {
+      border-color: var(--paper);
+    }
+
+    .btn-solid {
+      background: var(--burg);
+      color: var(--paper);
+      border-color: var(--burg);
+    }
+
+    .btn-solid::after {
+      border-color: var(--paper);
+    }
+
+    .btn-solid:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero-sidebar {
+      border-left: 1px solid rgba(26, 18, 8, .15);
+      padding-left: 2rem;
+    }
+
+    @media(max-width:699px) {
+      .hero-sidebar {
+        border-left: none;
+        border-top: 1px solid rgba(26, 18, 8, .15);
+        padding-left: 0;
+        padding-top: 1.5rem;
+      }
+    }
+
+    .sidebar-stat {
+      padding: 1rem 0;
+      border-bottom: 1px dashed rgba(26, 18, 8, .2);
+    }
+
+    .sidebar-stat:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--burg);
+    }
+
+    .sidebar-label {
+      font-family: 'Special Elite', monospace;
+      font-size: .66rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      margin-top: .15rem;
+    }
+
+    /* ─── STATUS STAMP ─── */
+    #status {
+      background: var(--paper-dark);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #status::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(-45deg, transparent, transparent 18px,
+          rgba(26, 18, 8, .025) 18px, rgba(26, 18, 8, .025) 19px);
+    }
+
+    .stamp {
+      display: inline-block;
+      font-family: 'Special Elite', monospace;
+      font-size: clamp(1.2rem, 4.5vw, 2.2rem);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--red-stamp);
+      border: 4px solid var(--red-stamp);
+      padding: .5rem 1.6rem;
+      transform: rotate(-2.5deg);
+      opacity: .85;
+      box-shadow: 2px 3px 0 rgba(192, 57, 43, .2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .stamp::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1.5px solid var(--red-stamp);
+      opacity: .35;
+    }
+
+    .status-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 3vw, 1.4rem);
+      font-style: italic;
+      color: var(--ink-faded);
+      max-width: 540px;
+      margin: 1.6rem auto 0;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      padding: 5rem 1.5rem;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .gazette-header {
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: .5rem 0;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .gazette-section-name {
+      font-family: 'Special Elite', monospace;
+      font-size: .66rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--burg);
+    }
+
+    .gazette-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--off-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media(min-width:700px) {
+      .about-grid {
+        grid-template-columns: 3fr 2fr;
+        align-items: start;
+      }
+    }
+
+    .about-body p {
+      font-size: 1.02rem;
+      color: var(--ink-faded);
+      line-height: 1.9;
+    }
+
+    .about-body p+p {
+      margin-top: 1rem;
+    }
+
+    .pullquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.25;
+      color: var(--burg);
+      border-top: 2px solid var(--burg);
+      border-bottom: 1px solid var(--burg);
+      padding: 1.1rem 0;
+      margin: 2rem 0;
+    }
+
+    .aside-stats {
+      border-left: 3px solid var(--ink);
+      padding-left: 1.5rem;
+    }
+
+    @media(max-width:699px) {
+      .aside-stats {
+        border-left: none;
+        border-top: 3px solid var(--ink);
+        padding-left: 0;
+        padding-top: 1.5rem;
+      }
+    }
+
+    .aside-stat {
+      padding: 1.1rem 0;
+      border-bottom: 1px dotted rgba(26, 18, 8, .2);
+    }
+
+    .aside-stat:last-child {
+      border-bottom: none;
+    }
+
+    .aside-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.6rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+      display: block;
+    }
+
+    .aside-label {
+      font-family: 'Special Elite', monospace;
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--burg);
+      display: block;
+      margin-top: .2rem;
+    }
+
+    /* ─── FEATURES ─── */
+    #features {
+      background: var(--paper);
+    }
+
+    .feat-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-top: 1px solid rgba(26, 18, 8, .18);
+      padding: 2.5rem 0;
+      gap: 1.2rem;
+      transition: background .2s;
+    }
+
+    .feat-row:hover {
+      background: rgba(107, 26, 26, .025);
+    }
+
+    @media(min-width:600px) {
+      .feat-row {
+        grid-template-columns: 3rem 1fr 2.5rem;
+        align-items: start;
+        gap: 2rem;
+      }
+    }
+
+    .feat-index {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: rgba(26, 18, 8, .1);
+      line-height: 1;
+    }
+
+    .feat-title-row {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: .5rem;
+    }
+
+    .feat-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .feat-badge {
+      font-family: 'Special Elite', monospace;
+      font-size: .6rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border: 1px solid var(--burg);
+      color: var(--burg);
+      padding: .18rem .55rem;
+    }
+
+    .feat-text {
+      font-size: .96rem;
+      color: var(--ink-faded);
+      line-height: 1.8;
+    }
+
+    .feat-tags {
+      margin-top: .85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+
+    .feat-tag {
+      font-family: 'Special Elite', monospace;
+      font-size: .6rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      background: var(--paper-dark);
+      border: 1px solid rgba(26, 18, 8, .15);
+      padding: .2rem .55rem;
+      color: var(--ink-faded);
+    }
+
+    .feat-icon-big {
+      font-size: 2rem;
+      opacity: .6;
+      text-align: center;
+      padding-top: .3rem;
+    }
+
+    @media(max-width:599px) {
+      .feat-index {
+        font-size: 2.2rem;
+      }
+
+      .feat-icon-big {
+        display: none;
+      }
+    }
+
+    /* ─── WHY ─── */
+    #why {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    #why .gazette-title {
+      color: var(--paper);
+    }
+
+    #why .gazette-header {
+      border-top-color: var(--paper);
+      border-bottom-color: rgba(240, 230, 204, .15);
+    }
+
+    #why .gazette-section-name {
+      color: var(--gold-lt);
+    }
+
+    .why-columns {
+      column-count: 1;
+      column-gap: 3rem;
+    }
+
+    @media(min-width:600px) {
+      .why-columns {
+        column-count: 2;
+      }
+    }
+
+    @media(min-width:900px) {
+      .why-columns {
+        column-count: 3;
+      }
+    }
+
+    .why-item {
+      break-inside: avoid;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(240, 230, 204, .08);
+      margin-bottom: .4rem;
+    }
+
+    .why-glyph {
+      font-size: 1.4rem;
+      margin-bottom: .45rem;
+      display: block;
+    }
+
+    .why-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      margin-bottom: .3rem;
+    }
+
+    .why-text {
+      font-size: .9rem;
+      color: rgba(240, 230, 204, .55);
+      line-height: 1.75;
+    }
+
+    /* ─── TEAM ─── */
+    #team {
+      background: var(--off-white);
+    }
+
+    .team-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      max-width: 760px;
+    }
+
+    @media(min-width:600px) {
+      .team-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .dev-profile {
+      background: var(--paper);
+      border: 1px solid rgba(26, 18, 8, .18);
+      padding: 2rem 1.8rem;
+      position: relative;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .dev-profile::before,
+    .dev-profile::after {
+      content: '';
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      border-style: solid;
+      border-color: var(--burg);
+    }
+
+    .dev-profile::before {
+      top: 7px;
+      left: 7px;
+      border-width: 1.5px 0 0 1.5px;
+    }
+
+    .dev-profile::after {
+      bottom: 7px;
+      right: 7px;
+      border-width: 0 1.5px 1.5px 0;
+    }
+
+    .dev-profile:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .dev-photo-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      margin-bottom: 1.2rem;
+      background: var(--paper-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dev-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .dev-initials {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink-faded);
+    }
+
+    .dev-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: .2rem;
+    }
+
+    .dev-role {
+      font-family: 'Special Elite', monospace;
+      font-size: .63rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--burg);
+      margin-bottom: .85rem;
+    }
+
+    .dev-bio {
+      font-size: .9rem;
+      color: var(--ink-faded);
+      line-height: 1.75;
+    }
+
+    .dev-footer {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(26, 18, 8, .2);
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+
+    .dev-gh-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: 'Special Elite', monospace;
+      font-size: .66rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all .2s;
+    }
+
+    .dev-gh-link:hover {
+      color: var(--burg);
+      border-bottom-color: var(--burg);
+    }
+
+    .dev-no-gh {
+      font-family: 'Special Elite', monospace;
+      font-size: .63rem;
+      letter-spacing: .07em;
+      color: rgba(26, 18, 8, .3);
+      font-style: italic;
+    }
+
+    /* ─── TECH ─── */
+    #tech {
+      background: var(--paper-dark);
+    }
+
+    .tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .tech-table th {
+      font-family: 'Special Elite', monospace;
+      font-size: .63rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--burg);
+      border-bottom: 2px solid var(--ink);
+      padding: .5rem .8rem;
+      text-align: left;
+    }
+
+    .tech-table td {
+      font-size: .9rem;
+      padding: .7rem .8rem;
+      border-bottom: 1px dotted rgba(26, 18, 8, .15);
+      color: var(--ink-faded);
+    }
+
+    .tech-table td:first-child {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .tech-table tr:hover td {
+      background: rgba(107, 26, 26, .03);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--paper);
+      border-top: 4px double var(--ink);
+    }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-large {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 6vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+    }
+
+    .contact-large strong {
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .contact-body {
+      font-size: .97rem;
+      color: var(--ink-faded);
+      line-height: 1.8;
+      max-width: 440px;
+      margin: 0 auto 1.6rem;
+    }
+
+    .contact-email-link {
+      display: inline-block;
+      font-family: 'Special Elite', monospace;
+      font-size: clamp(.74rem, 2.2vw, .95rem);
+      letter-spacing: .07em;
+      color: var(--burg);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--burg);
+      padding-bottom: .15rem;
+      transition: opacity .2s;
+    }
+
+    .contact-email-link:hover {
+      opacity: .6;
+    }
+
+    .contact-note {
+      font-size: .85rem;
+      color: rgba(26, 18, 8, .4);
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+
+    /* ─── ORN DIVIDER ─── */
+    .orn-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      color: var(--gold-rule);
+      font-size: 1.1rem;
+    }
+
+    .orn-divider::before,
+    .orn-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gold-rule);
+      opacity: .4;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: rgba(240, 230, 204, .4);
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-family: 'Special Elite', monospace;
+      font-size: .66rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: none;
+      color: var(--gold-lt);
+    }
+
+    footer a {
+      color: rgba(240, 230, 204, .35);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--gold-lt);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s, transform .6s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .r1 {
+      transition-delay: .1s
+    }
+
+    .r2 {
+      transition-delay: .2s
+    }
+
+    .r3 {
+      transition-delay: .3s
+    }
+
+    .r4 {
+      transition-delay: .4s
+    }
+
+    @media(max-width:480px) {
+      .hero-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <a class="nav-title" href="#">Nyaya <span>Sahayak</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#team">Team</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a class="nav-title" href="#">Nyaya <span>Sahayak</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- ═══ HERO / GAZETTE MASTHEAD ═══ -->
-<section id="hero">
-  <!-- Rotating seal in background -->
-  <svg class="hero-bg-seal" id="heroSeal" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="120" cy="120" r="112" stroke="#1a1208" stroke-width="1.5"/>
-    <circle cx="120" cy="120" r="102" stroke="#1a1208" stroke-width=".5"/>
-    <circle cx="120" cy="120" r="12" stroke="#1a1208" stroke-width="1.5" fill="none"/>
-    <circle cx="120" cy="120" r="5" fill="#1a1208"/>
-    <line x1="120" y1="22" x2="120" y2="108" stroke="#1a1208" stroke-width="2"/>
-    <line x1="120" y1="132" x2="120" y2="218" stroke="#1a1208" stroke-width="2"/>
-    <line x1="22" y1="120" x2="108" y2="120" stroke="#1a1208" stroke-width="2"/>
-    <line x1="132" y1="120" x2="218" y2="120" stroke="#1a1208" stroke-width="2"/>
-    <line x1="69" y1="41" x2="108" y2="107" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="132" y1="133" x2="171" y2="199" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="199" y1="69" x2="133" y2="108" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="107" y1="132" x2="41" y2="171" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="171" y1="41" x2="132" y2="107" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="108" y1="133" x2="69" y2="199" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="41" y1="69" x2="107" y2="108" stroke="#1a1208" stroke-width="1.5"/>
-    <line x1="133" y1="132" x2="199" y2="171" stroke="#1a1208" stroke-width="1.5"/>
-    <path id="sealPath" d="M120,16 a104,104 0 1,1 -.1,0" fill="none"/>
-    <text font-family="Special Elite,monospace" font-size="7" letter-spacing="4.8" fill="#1a1208" opacity=".55">
-      <textPath href="#sealPath">NYAYA SAHAYAK · LEGAL AID · JUSTICE FOR ALL · INDIA 2026 ·</textPath>
-    </text>
-    <text x="120" y="200" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="#6b1a1a" font-style="italic">न्याय सहायक</text>
-  </svg>
+  <!-- ═══ HERO / GAZETTE MASTHEAD ═══ -->
+  <section id="hero">
+    <!-- Rotating seal in background -->
+    <svg class="hero-bg-seal" id="heroSeal" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true">
+      <circle cx="120" cy="120" r="112" stroke="#1a1208" stroke-width="1.5" />
+      <circle cx="120" cy="120" r="102" stroke="#1a1208" stroke-width=".5" />
+      <circle cx="120" cy="120" r="12" stroke="#1a1208" stroke-width="1.5" fill="none" />
+      <circle cx="120" cy="120" r="5" fill="#1a1208" />
+      <line x1="120" y1="22" x2="120" y2="108" stroke="#1a1208" stroke-width="2" />
+      <line x1="120" y1="132" x2="120" y2="218" stroke="#1a1208" stroke-width="2" />
+      <line x1="22" y1="120" x2="108" y2="120" stroke="#1a1208" stroke-width="2" />
+      <line x1="132" y1="120" x2="218" y2="120" stroke="#1a1208" stroke-width="2" />
+      <line x1="69" y1="41" x2="108" y2="107" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="132" y1="133" x2="171" y2="199" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="199" y1="69" x2="133" y2="108" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="107" y1="132" x2="41" y2="171" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="171" y1="41" x2="132" y2="107" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="108" y1="133" x2="69" y2="199" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="41" y1="69" x2="107" y2="108" stroke="#1a1208" stroke-width="1.5" />
+      <line x1="133" y1="132" x2="199" y2="171" stroke="#1a1208" stroke-width="1.5" />
+      <path id="sealPath" d="M120,16 a104,104 0 1,1 -.1,0" fill="none" />
+      <text font-family="Special Elite,monospace" font-size="7" letter-spacing="4.8" fill="#1a1208" opacity=".55">
+        <textPath href="#sealPath">NYAYA SAHAYAK · LEGAL AID · JUSTICE FOR ALL · INDIA 2026 ·</textPath>
+      </text>
+      <text x="120" y="200" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="#6b1a1a"
+        font-style="italic">न्याय सहायक</text>
+    </svg>
 
-  <div class="masthead-top">
-    <div class="masthead-kicker">Zero-Cost Legal Aid &nbsp;·&nbsp; Offline-First &nbsp;·&nbsp; India 2026</div>
-    <h1 class="masthead-name">Nyaya<br><em>Sahayak</em></h1>
-    <p class="masthead-tagline">Law in your language — Justice in your hands</p>
-  </div>
-  <div class="masthead-rule"></div>
-
-  <div class="hero-body">
-    <div class="hero-cols">
-      <div>
-        <p class="hero-hl">
-          <strong>300 million Indians</strong>
-          qualify for legal aid.<br>
-          <em>Almost none receive it.</em>
-        </p>
-        <p class="hero-body-text">
-          Nyaya Sahayak is a free, offline-first mobile application built for
-          the India that lives beyond wifi — for the farmer who doesn't know his
-          property rights, the woman afraid to file an FIR, the migrant worker
-          cheated of his wages. The law belongs to everyone.
-        </p>
-        <div class="hero-ctas">
-          <a href="#features" class="btn btn-solid">Explore Modules</a>
-          <a href="#contact" class="btn">Write to Us</a>
-        </div>
-      </div>
-      <aside class="hero-sidebar">
-        <div class="sidebar-stat">
-          <div class="sidebar-num">53+</div>
-          <div class="sidebar-label">Fundamental Rights Documented</div>
-        </div>
-        <div class="sidebar-stat">
-          <div class="sidebar-num">17</div>
-          <div class="sidebar-label">Indian Languages</div>
-        </div>
-        <div class="sidebar-stat">
-          <div class="sidebar-num">₹0</div>
-          <div class="sidebar-label">Cost to every user, always</div>
-        </div>
-        <div class="sidebar-stat">
-          <div class="sidebar-num">25+</div>
-          <div class="sidebar-label">Government Procedures Guided</div>
-        </div>
-      </aside>
+    <div class="masthead-top">
+      <div class="masthead-kicker">Zero-Cost Legal Aid &nbsp;·&nbsp; Offline-First &nbsp;·&nbsp; India 2026</div>
+      <h1 class="masthead-name">Nyaya<br><em>Sahayak</em></h1>
+      <p class="masthead-tagline">Law in your language — Justice in your hands</p>
     </div>
-  </div>
-</section>
+    <div class="masthead-rule"></div>
 
-<!-- STATUS -->
-<section id="status">
-  <div class="reveal">
-    <div class="stamp">Under Development</div>
-  </div>
-  <p class="status-body reveal r1">The application is actively being built. Core modules are functional and in testing. Public release expected mid-2026.</p>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="section-inner">
-    <div class="gazette-header">
-      <span class="gazette-section-name">§ I — Background</span>
-      <h2 class="gazette-title reveal">Our Mission</h2>
-    </div>
-    <div class="about-grid">
-      <div>
-        <div class="about-body reveal">
-          <p>India's constitution guarantees every citizen fundamental rights. Yet for hundreds of millions living in rural areas, low-connectivity zones, or outside the urban professional class — those rights exist only on paper.</p>
-          <p>Legal illiteracy isn't a personal failure. It's a systemic one. Lawyers are expensive. Procedures are opaque. Government offices are distant. Language is a barrier. And the internet has done little to bridge that gap for 400 million Indians who remain offline.</p>
+    <div class="hero-body">
+      <div class="hero-cols">
+        <div>
+          <p class="hero-hl">
+            <strong>300 million Indians</strong>
+            qualify for legal aid.<br>
+            <em>Almost none receive it.</em>
+          </p>
+          <p class="hero-body-text">
+            Nyaya Sahayak is a free, offline-first mobile application built for
+            the India that lives beyond wifi — for the farmer who doesn't know his
+            property rights, the woman afraid to file an FIR, the migrant worker
+            cheated of his wages. The law belongs to everyone.
+          </p>
+          <div class="hero-ctas">
+            <a href="#features" class="btn btn-solid">Explore Modules</a>
+            <a href="#contact" class="btn">Write to Us</a>
+          </div>
         </div>
-        <blockquote class="pullquote reveal r1">"The law must reach the last person — not just the last mile."</blockquote>
-        <div class="about-body reveal r2">
-          <p>Nyaya Sahayak was designed around one constraint: <em>it must work with no internet, on a basic Android phone, for someone who has never used a legal resource in their life.</em> Everything else follows.</p>
-        </div>
-      </div>
-      <aside class="aside-stats reveal r2">
-        <div class="aside-stat">
-          <span class="aside-num">400M</span>
-          <span class="aside-label">Offline/low-connectivity users in India</span>
-        </div>
-        <div class="aside-stat">
-          <span class="aside-num">300M</span>
-          <span class="aside-label">Legal aid-eligible population</span>
-        </div>
-        <div class="aside-stat">
-          <span class="aside-num">&lt;50MB</span>
-          <span class="aside-label">App size — runs on basic smartphones</span>
-        </div>
-        <div class="aside-stat">
-          <span class="aside-num">99.5%</span>
-          <span class="aside-label">Target crash-free session rate</span>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<div class="orn-divider">— ⚖ —</div>
-
-<!-- FEATURES -->
-<section id="features" class="section">
-  <div class="section-inner">
-    <div class="gazette-header">
-      <span class="gazette-section-name">§ II — Core Modules</span>
-      <h2 class="gazette-title reveal">Four Pillars of Access</h2>
-    </div>
-
-    <div class="feat-row reveal">
-      <div class="feat-index">01</div>
-      <div>
-        <div class="feat-title-row">
-          <h3 class="feat-heading">Know Your Rights</h3>
-          <span class="feat-badge">Constitutional</span>
-        </div>
-        <p class="feat-text">A searchable repository of 53+ fundamental rights and legal protections explained in plain language. Covers Articles 14–32 of the Indian Constitution, labour protections, women's rights, and emergency legal provisions. Verified content, offline always.</p>
-        <div class="feat-tags">
-          <span class="feat-tag">Arts. 14–32</span><span class="feat-tag">Labour Law</span>
-          <span class="feat-tag">Women's Rights</span><span class="feat-tag">Property Rights</span><span class="feat-tag">FTS Search</span>
-        </div>
-      </div>
-      <div class="feat-icon-big">📜</div>
-    </div>
-
-    <div class="feat-row reveal r1">
-      <div class="feat-index">02</div>
-      <div>
-        <div class="feat-title-row">
-          <h3 class="feat-heading">Apply For</h3>
-          <span class="feat-badge">Procedural</span>
-        </div>
-        <p class="feat-text">Step-by-step guidance for 25+ government documents and welfare schemes. No jargon, no guesswork — numbered steps for Aadhaar, Voter ID, Ration Card, RTI filing, and more. Designed so a first-time user can follow it alone.</p>
-        <div class="feat-tags">
-          <span class="feat-tag">RTI Filing</span><span class="feat-tag">Aadhaar</span>
-          <span class="feat-tag">Voter ID</span><span class="feat-tag">Ration Card</span><span class="feat-tag">25+ Schemes</span>
-        </div>
-      </div>
-      <div class="feat-icon-big">📋</div>
-    </div>
-
-    <div class="feat-row reveal r2">
-      <div class="feat-index">03</div>
-      <div>
-        <div class="feat-title-row">
-          <h3 class="feat-heading">Where To Go</h3>
-          <span class="feat-badge">Navigation</span>
-        </div>
-        <p class="feat-text">Fully offline maps using pre-bundled OpenStreetMap tiles. Government offices, legal aid centres, and district courts pre-loaded with GPS navigation. No mobile data required — because the people who need legal help most often have none.</p>
-        <div class="feat-tags">
-          <span class="feat-tag">Offline OSM</span><span class="feat-tag">GPS Nav</span>
-          <span class="feat-tag">Legal Aid Centres</span><span class="feat-tag">State-specific</span>
-        </div>
-      </div>
-      <div class="feat-icon-big">🗺️</div>
-    </div>
-
-    <div class="feat-row reveal r3">
-      <div class="feat-index">04</div>
-      <div>
-        <div class="feat-title-row">
-          <h3 class="feat-heading">Emergency SOS</h3>
-          <span class="feat-badge">Safety</span>
-        </div>
-        <p class="feat-text">One-touch emergency alerts with auto location-sharing to privately-stored contacts. Built first for women facing domestic violence, but designed for anyone in immediate danger. Contacts are never synced to any server — they stay on your device.</p>
-        <div class="feat-tags">
-          <span class="feat-tag">One-Touch SOS</span><span class="feat-tag">Private Contacts</span>
-          <span class="feat-tag">Auto-Location</span><span class="feat-tag">No Server Sync</span>
-        </div>
-      </div>
-      <div class="feat-icon-big">🆘</div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY -->
-<section id="why" class="section">
-  <div class="section-inner">
-    <div class="gazette-header">
-      <span class="gazette-section-name">§ III — Principles</span>
-      <h2 class="gazette-title reveal">Built Different,<br>by Design</h2>
-    </div>
-    <div class="why-columns">
-      <div class="why-item reveal">
-        <span class="why-glyph">📶</span>
-        <div class="why-heading">100% Offline</div>
-        <p class="why-text">No servers, no API calls. SQLite with full-text search stores everything locally. Works in villages, forests, anywhere signal disappears.</p>
-      </div>
-      <div class="why-item reveal r1">
-        <span class="why-glyph">🔒</span>
-        <div class="why-heading">Private by Design</div>
-        <p class="why-text">Zero data collection. No tracking or analytics. Emergency contacts are encrypted and never leave the device.</p>
-      </div>
-      <div class="why-item reveal r2">
-        <span class="why-glyph">🌐</span>
-        <div class="why-heading">17 Languages</div>
-        <p class="why-text">Hindi, Tamil, Telugu, Bengali, Urdu, Marathi, Gujarati, Odia, Punjabi, Kannada, Malayalam, Assamese, Kashmiri, Kokborok, Nepali, Sanskrit, English.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="why-glyph">📱</span>
-        <div class="why-heading">Runs on Basic Phones</div>
-        <p class="why-text">Under 50 MB. Launches in 3 seconds. Android 8.0+ and iOS 14.0+ — including 4-year-old budget handsets.</p>
-      </div>
-      <div class="why-item reveal r1">
-        <span class="why-glyph">📡</span>
-        <div class="why-heading">Bluetooth Content Sync</div>
-        <p class="why-text">Volunteers push verified content updates device-to-device via Bluetooth P2P at legal aid clinics. No internet needed.</p>
-      </div>
-      <div class="why-item reveal r2">
-        <span class="why-glyph">✍️</span>
-        <div class="why-heading">Cryptographically Verified</div>
-        <p class="why-text">Every content item carries an RSA-signed SHA-256 signature, checked before display. No misinformation can be injected.</p>
+        <aside class="hero-sidebar">
+          <div class="sidebar-stat">
+            <div class="sidebar-num">53+</div>
+            <div class="sidebar-label">Fundamental Rights Documented</div>
+          </div>
+          <div class="sidebar-stat">
+            <div class="sidebar-num">17</div>
+            <div class="sidebar-label">Indian Languages</div>
+          </div>
+          <div class="sidebar-stat">
+            <div class="sidebar-num">₹0</div>
+            <div class="sidebar-label">Cost to every user, always</div>
+          </div>
+          <div class="sidebar-stat">
+            <div class="sidebar-num">25+</div>
+            <div class="sidebar-label">Government Procedures Guided</div>
+          </div>
+        </aside>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TEAM -->
-<section id="team" class="section">
-  <div class="section-inner">
-    <div class="gazette-header">
-      <span class="gazette-section-name">§ IV — The Builders</span>
-      <h2 class="gazette-title reveal">Two developers.<br>One mission.</h2>
+  <!-- STATUS -->
+  <section id="status">
+    <div class="reveal">
+      <div class="stamp">Under Development</div>
     </div>
-    <div class="team-layout">
+    <p class="status-body reveal r1">The application is actively being built. Core modules are functional and in
+      testing. Public release expected mid-2026.</p>
+  </section>
 
-      <div class="dev-profile reveal">
-        <div class="dev-photo-wrap">
-          <img
-            src="https://avatars.githubusercontent.com/u/235676604?v=4"
-            alt="Ojas S.K Mohbansi"
-            id="ojasPhoto"
-            onerror="this.style.display='none';document.getElementById('ojasInit').style.display='block';"
-          />
-          <span class="dev-initials" id="ojasInit" style="display:none;">OM</span>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <div class="gazette-header">
+        <span class="gazette-section-name">§ I — Background</span>
+        <h2 class="gazette-title reveal">Our Mission</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <div class="about-body reveal">
+            <p>India's constitution guarantees every citizen fundamental rights. Yet for hundreds of millions living in
+              rural areas, low-connectivity zones, or outside the urban professional class — those rights exist only on
+              paper.</p>
+            <p>Legal illiteracy isn't a personal failure. It's a systemic one. Lawyers are expensive. Procedures are
+              opaque. Government offices are distant. Language is a barrier. And the internet has done little to bridge
+              that gap for 400 million Indians who remain offline.</p>
+          </div>
+          <blockquote class="pullquote reveal r1">"The law must reach the last person — not just the last mile."
+          </blockquote>
+          <div class="about-body reveal r2">
+            <p>Nyaya Sahayak was designed around one constraint: <em>it must work with no internet, on a basic Android
+                phone, for someone who has never used a legal resource in their life.</em> Everything else follows.</p>
+          </div>
         </div>
-        <div class="dev-name">Ojas S.K Mohbansi</div>
-        <div class="dev-role">Co-Founder &amp; Developer</div>
-        <p class="dev-bio">Driving the technical architecture and vision of Nyaya Sahayak. Passionate about using software to address systemic inequality in legal information access across India.</p>
-        <div class="dev-footer">
-          <a class="dev-gh-link" href="https://github.com/ojas-mohbansi" target="_blank" rel="noopener noreferrer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            github.com/ojas-mohbansi
-          </a>
-        </div>
+        <aside class="aside-stats reveal r2">
+          <div class="aside-stat">
+            <span class="aside-num">400M</span>
+            <span class="aside-label">Offline/low-connectivity users in India</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-num">300M</span>
+            <span class="aside-label">Legal aid-eligible population</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-num">&lt;50MB</span>
+            <span class="aside-label">App size — runs on basic smartphones</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-num">99.5%</span>
+            <span class="aside-label">Target crash-free session rate</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="orn-divider">— ⚖ —</div>
+
+  <!-- FEATURES -->
+  <section id="features" class="section">
+    <div class="section-inner">
+      <div class="gazette-header">
+        <span class="gazette-section-name">§ II — Core Modules</span>
+        <h2 class="gazette-title reveal">Four Pillars of Access</h2>
       </div>
 
-      <div class="dev-profile reveal r2">
-        <div class="dev-photo-wrap">
-          <span class="dev-initials">PP</span>
+      <div class="feat-row reveal">
+        <div class="feat-index">01</div>
+        <div>
+          <div class="feat-title-row">
+            <h3 class="feat-heading">Know Your Rights</h3>
+            <span class="feat-badge">Constitutional</span>
+          </div>
+          <p class="feat-text">A searchable repository of 53+ fundamental rights and legal protections explained in
+            plain language. Covers Articles 14–32 of the Indian Constitution, labour protections, women's rights, and
+            emergency legal provisions. Verified content, offline always.</p>
+          <div class="feat-tags">
+            <span class="feat-tag">Arts. 14–32</span><span class="feat-tag">Labour Law</span>
+            <span class="feat-tag">Women's Rights</span><span class="feat-tag">Property Rights</span><span
+              class="feat-tag">FTS Search</span>
+          </div>
         </div>
-        <div class="dev-name">Pranav Prasoon</div>
-        <div class="dev-role">Co-Founder &amp; Developer</div>
-        <p class="dev-bio">Shaping the product experience and legal content strategy. Focused on making constitutional rights genuinely understandable to people who have never encountered a legal document.</p>
-        <div class="dev-footer">
-          <span class="dev-no-gh">GitHub profile not public</span>
-        </div>
+        <div class="feat-icon-big">📜</div>
       </div>
 
+      <div class="feat-row reveal r1">
+        <div class="feat-index">02</div>
+        <div>
+          <div class="feat-title-row">
+            <h3 class="feat-heading">Apply For</h3>
+            <span class="feat-badge">Procedural</span>
+          </div>
+          <p class="feat-text">Step-by-step guidance for 25+ government documents and welfare schemes. No jargon, no
+            guesswork — numbered steps for Aadhaar, Voter ID, Ration Card, RTI filing, and more. Designed so a
+            first-time user can follow it alone.</p>
+          <div class="feat-tags">
+            <span class="feat-tag">RTI Filing</span><span class="feat-tag">Aadhaar</span>
+            <span class="feat-tag">Voter ID</span><span class="feat-tag">Ration Card</span><span class="feat-tag">25+
+              Schemes</span>
+          </div>
+        </div>
+        <div class="feat-icon-big">📋</div>
+      </div>
+
+      <div class="feat-row reveal r2">
+        <div class="feat-index">03</div>
+        <div>
+          <div class="feat-title-row">
+            <h3 class="feat-heading">Where To Go</h3>
+            <span class="feat-badge">Navigation</span>
+          </div>
+          <p class="feat-text">Fully offline maps using pre-bundled OpenStreetMap tiles. Government offices, legal aid
+            centres, and district courts pre-loaded with GPS navigation. No mobile data required — because the people
+            who need legal help most often have none.</p>
+          <div class="feat-tags">
+            <span class="feat-tag">Offline OSM</span><span class="feat-tag">GPS Nav</span>
+            <span class="feat-tag">Legal Aid Centres</span><span class="feat-tag">State-specific</span>
+          </div>
+        </div>
+        <div class="feat-icon-big">🗺️</div>
+      </div>
+
+      <div class="feat-row reveal r3">
+        <div class="feat-index">04</div>
+        <div>
+          <div class="feat-title-row">
+            <h3 class="feat-heading">Emergency SOS</h3>
+            <span class="feat-badge">Safety</span>
+          </div>
+          <p class="feat-text">One-touch emergency alerts with auto location-sharing to privately-stored contacts. Built
+            first for women facing domestic violence, but designed for anyone in immediate danger. Contacts are never
+            synced to any server — they stay on your device.</p>
+          <div class="feat-tags">
+            <span class="feat-tag">One-Touch SOS</span><span class="feat-tag">Private Contacts</span>
+            <span class="feat-tag">Auto-Location</span><span class="feat-tag">No Server Sync</span>
+          </div>
+        </div>
+        <div class="feat-icon-big">🆘</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="orn-divider">— ✦ —</div>
-
-<!-- TECH -->
-<section id="tech" class="section">
-  <div class="section-inner">
-    <div class="gazette-header">
-      <span class="gazette-section-name">§ V — Technology</span>
-      <h2 class="gazette-title reveal">Under the Hood</h2>
+  <!-- WHY -->
+  <section id="why" class="section">
+    <div class="section-inner">
+      <div class="gazette-header">
+        <span class="gazette-section-name">§ III — Principles</span>
+        <h2 class="gazette-title reveal">Built Different,<br>by Design</h2>
+      </div>
+      <div class="why-columns">
+        <div class="why-item reveal">
+          <span class="why-glyph">📶</span>
+          <div class="why-heading">100% Offline</div>
+          <p class="why-text">No servers, no API calls. SQLite with full-text search stores everything locally. Works in
+            villages, forests, anywhere signal disappears.</p>
+        </div>
+        <div class="why-item reveal r1">
+          <span class="why-glyph">🔒</span>
+          <div class="why-heading">Private by Design</div>
+          <p class="why-text">Zero data collection. No tracking or analytics. Emergency contacts are encrypted and never
+            leave the device.</p>
+        </div>
+        <div class="why-item reveal r2">
+          <span class="why-glyph">🌐</span>
+          <div class="why-heading">17 Languages</div>
+          <p class="why-text">Hindi, Tamil, Telugu, Bengali, Urdu, Marathi, Gujarati, Odia, Punjabi, Kannada, Malayalam,
+            Assamese, Kashmiri, Kokborok, Nepali, Sanskrit, English.</p>
+        </div>
+        <div class="why-item reveal">
+          <span class="why-glyph">📱</span>
+          <div class="why-heading">Runs on Basic Phones</div>
+          <p class="why-text">Under 50 MB. Launches in 3 seconds. Android 8.0+ and iOS 14.0+ — including 4-year-old
+            budget handsets.</p>
+        </div>
+        <div class="why-item reveal r1">
+          <span class="why-glyph">📡</span>
+          <div class="why-heading">Bluetooth Content Sync</div>
+          <p class="why-text">Volunteers push verified content updates device-to-device via Bluetooth P2P at legal aid
+            clinics. No internet needed.</p>
+        </div>
+        <div class="why-item reveal r2">
+          <span class="why-glyph">✍️</span>
+          <div class="why-heading">Cryptographically Verified</div>
+          <p class="why-text">Every content item carries an RSA-signed SHA-256 signature, checked before display. No
+            misinformation can be injected.</p>
+        </div>
+      </div>
     </div>
-    <table class="tech-table reveal">
-      <thead>
-        <tr><th>Component</th><th>Technology</th><th>Purpose</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Framework</td><td>React Native 0.72</td><td>Cross-platform mobile UI</td></tr>
-        <tr><td>Build Tool</td><td>Expo SDK 49</td><td>Development &amp; deployment</td></tr>
-        <tr><td>Language</td><td>TypeScript 5.0</td><td>Type-safe development</td></tr>
-        <tr><td>State</td><td>Zustand 4.4</td><td>Lightweight state management</td></tr>
-        <tr><td>Database</td><td>SQLite 3.42+ with FTS4</td><td>Offline full-text search</td></tr>
-        <tr><td>Maps</td><td>OpenStreetMap (offline tiles)</td><td>Zero-data navigation</td></tr>
-        <tr><td>Navigation</td><td>React Navigation 6</td><td>Screen routing</td></tr>
-        <tr><td>P2P Sync</td><td>Bluetooth RFCOMM</td><td>Offline content distribution</td></tr>
-        <tr><td>Security</td><td>RSA + SHA-256</td><td>Content integrity verification</td></tr>
-        <tr><td>Platforms</td><td>Android 8.0+ · iOS 14.0+</td><td>Broad device compatibility</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <div class="section-inner">
-    <div class="gazette-header" style="justify-content:center;flex-direction:column;align-items:center;gap:.4rem;text-align:center;">
-      <span class="gazette-section-name">§ VI — Contact</span>
+  <!-- TEAM -->
+  <section id="team" class="section">
+    <div class="section-inner">
+      <div class="gazette-header">
+        <span class="gazette-section-name">§ IV — The Builders</span>
+        <h2 class="gazette-title reveal">Two developers.<br>One mission.</h2>
+      </div>
+      <div class="team-layout">
+
+        <div class="dev-profile reveal">
+          <div class="dev-photo-wrap">
+            <img src="https://avatars.githubusercontent.com/u/235676604?v=4" alt="Ojas S.K Mohbansi" id="ojasPhoto"
+              onerror="this.style.display='none';document.getElementById('ojasInit').style.display='block';" />
+            <span class="dev-initials" id="ojasInit" style="display:none;">OM</span>
+          </div>
+          <div class="dev-name">Ojas S.K Mohbansi</div>
+          <div class="dev-role">Co-Founder &amp; Developer</div>
+          <p class="dev-bio">Driving the technical architecture and vision of Nyaya Sahayak. Passionate about using
+            software to address systemic inequality in legal information access across India.</p>
+          <div class="dev-footer">
+            <a class="dev-gh-link" href="https://github.com/ojas-mohbansi" target="_blank" rel="noopener noreferrer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+              github.com/ojas-mohbansi
+            </a>
+          </div>
+        </div>
+
+        <div class="dev-profile reveal r2">
+          <div class="dev-photo-wrap">
+            <span class="dev-initials">PP</span>
+          </div>
+          <div class="dev-name">Pranav Prasoon</div>
+          <div class="dev-role">Co-Founder &amp; Developer</div>
+          <p class="dev-bio">Shaping the product experience and legal content strategy. Focused on making constitutional
+            rights genuinely understandable to people who have never encountered a legal document.</p>
+          <div class="dev-footer">
+            <span class="dev-no-gh">GitHub profile not public</span>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="contact-inner">
-      <p class="contact-large reveal">Want to contribute,<br><strong>collaborate, or partner?</strong></p>
-      <p class="contact-body reveal r1">Whether you're an NGO worker, legal aid volunteer, developer, or anyone who believes in equal access to justice — we'd love to hear from you.</p>
-      <a class="contact-email-link reveal r2" href="mailto:ojasmohbansi+nyayasahayak@gmail.com">
-        ojasmohbansi+nyayasahayak@gmail.com
-      </a>
-      <p class="contact-note reveal r3">Nyaya Sahayak is a volunteer-built project. All correspondence is personally read and replied to.</p>
+  </section>
+
+  <div class="orn-divider">— ✦ —</div>
+
+  <!-- TECH -->
+  <section id="tech" class="section">
+    <div class="section-inner">
+      <div class="gazette-header">
+        <span class="gazette-section-name">§ V — Technology</span>
+        <h2 class="gazette-title reveal">Under the Hood</h2>
+      </div>
+      <table class="tech-table reveal">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Technology</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Framework</td>
+            <td>React Native 0.72</td>
+            <td>Cross-platform mobile UI</td>
+          </tr>
+          <tr>
+            <td>Build Tool</td>
+            <td>Expo SDK 49</td>
+            <td>Development &amp; deployment</td>
+          </tr>
+          <tr>
+            <td>Language</td>
+            <td>TypeScript 5.0</td>
+            <td>Type-safe development</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>Zustand 4.4</td>
+            <td>Lightweight state management</td>
+          </tr>
+          <tr>
+            <td>Database</td>
+            <td>SQLite 3.42+ with FTS4</td>
+            <td>Offline full-text search</td>
+          </tr>
+          <tr>
+            <td>Maps</td>
+            <td>OpenStreetMap (offline tiles)</td>
+            <td>Zero-data navigation</td>
+          </tr>
+          <tr>
+            <td>Navigation</td>
+            <td>React Navigation 6</td>
+            <td>Screen routing</td>
+          </tr>
+          <tr>
+            <td>P2P Sync</td>
+            <td>Bluetooth RFCOMM</td>
+            <td>Offline content distribution</td>
+          </tr>
+          <tr>
+            <td>Security</td>
+            <td>RSA + SHA-256</td>
+            <td>Content integrity verification</td>
+          </tr>
+          <tr>
+            <td>Platforms</td>
+            <td>Android 8.0+ · iOS 14.0+</td>
+            <td>Broad device compatibility</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-brand">Nyaya Sahayak</span>
-  <span>© 2026 · Made by <a href="https://github.com/ojas-mohbansi" target="_blank" rel="noopener">Ojas Mohbansi</a> &amp; Pranav Prasoon · All Rights Reserved</span>
-</footer>
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="section-inner">
+      <div class="gazette-header"
+        style="justify-content:center;flex-direction:column;align-items:center;gap:.4rem;text-align:center;">
+        <span class="gazette-section-name">§ VI — Contact</span>
+      </div>
+      <div class="contact-inner">
+        <p class="contact-large reveal">Want to contribute,<br><strong>collaborate, or partner?</strong></p>
+        <p class="contact-body reveal r1">Whether you're an NGO worker, legal aid volunteer, developer, or anyone who
+          believes in equal access to justice — we'd love to hear from you.</p>
+        <a class="contact-email-link reveal r2"
+          href="/cdn-cgi/l/email-protection#482722293b2527202a29263b216326312931293b292029312923082f25292124662b2725">
+          <span class="__cf_email__"
+            data-cfemail="9ff0f5feecf2f0f7fdfef1ecf6b4f1e6fee6feecfef7fee6fef4dff8f2fef6f3b1fcf0f2">[email&#160;protected]</span>
+        </a>
+        <p class="contact-note reveal r3">Nyaya Sahayak is a volunteer-built project. All correspondence is personally
+          read and replied to.</p>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Nav stuck state
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('stuck', window.scrollY > 50);
-  }, {passive:true});
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Nyaya Sahayak</span>
+    <span>© 2026 · Made by <a href="https://github.com/ojas-mohbansi" target="_blank" rel="noopener">Ojas Mohbansi</a>
+      &amp; Pranav Prasoon · All Rights Reserved</span>
+  </footer>
 
-  // Parallax + rotate seal
-  const seal = document.getElementById('heroSeal');
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    seal.style.transform = `translateY(${y * 0.25}px) rotate(${y * 0.022}deg)`;
-  }, {passive:true});
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // Nav stuck state
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('stuck', window.scrollY > 50);
+    }, { passive: true });
 
-  // Scroll reveal
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    // Parallax + rotate seal
+    const seal = document.getElementById('heroSeal');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      seal.style.transform = `translateY(${y * 0.25}px) rotate(${y * 0.022}deg)`;
+    }, { passive: true });
 
-  // Smooth nav scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Smooth nav scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
     });
-  });
-</script>
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 🕵️ CLIPBOARD HIJACK — sneaky but harmless
+    // If you're reading this in the source... hi.
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      const selected = window.getSelection()?.toString().trim() || '';
+      const stamp = '\n\n— Property of Nyaya Sahayak\n   https://ojas-mohbansi.github.io/nsw/';
+      const gifted = selected
+        ? selected + stamp
+        : 'Property of Nyaya Sahayak — https://ojas-mohbansi.github.io/nsw/';
+      e.clipboardData.setData('text/plain', gifted);
+      e.clipboardData.setData('text/html',
+        `<span>${selected.replace(/</g, '&lt;')}</span>` +
+        `<span style="font-size:0;opacity:0">${stamp}</span>`
+      );
+    });
+
+    // Block right-click save on images
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('contextmenu', e => e.preventDefault());
+      img.setAttribute('draggable', 'false');
+    });
+
+    // Nullify drag-to-copy attempts
+    document.addEventListener('dragstart', e => {
+      if (e.target.tagName === 'IMG' || e.target.tagName === 'A') e.preventDefault();
+    });
+
+  </script>
 </body>
+
 </html>
